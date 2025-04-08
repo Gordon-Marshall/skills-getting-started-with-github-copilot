@@ -17,50 +17,7 @@
         <h3>Available Activities</h3>
         <div id="activities-list">
           <!-- Activities will be loaded here -->
-          <p>Loading activities...</p>
         </div>
-        <script>
-          document.addEventListener("DOMContentLoaded", async () => {
-            const activitiesList = document.getElementById("activities-list");
-            const activitySelect = document.getElementById("activity");
-        
-            try {
-              const response = await fetch("/activities");
-              const activities = await response.json();
-        
-              activitiesList.innerHTML = "";
-              activitySelect.innerHTML = '<option value="">-- Select an activity --</option>';
-        
-              for (const [name, details] of Object.entries(activities)) {
-                // Create activity card
-                const activityCard = document.createElement("div");
-                activityCard.className = "activity-card";
-        
-                activityCard.innerHTML = `
-                  <h4>${name}</h4>
-                  <p><strong>Description:</strong> ${details.description}</p>
-                  <p><strong>Schedule:</strong> ${details.schedule}</p>
-                  <p><strong>Max Participants:</strong> ${details.max_participants}</p>
-                  <p><strong>Participants (${details.participants.length}):</strong></p>
-                  <ul>
-                    ${details.participants.map(participant => `<li>${participant}</li>`).join("")}
-                  </ul>
-                `;
-        
-                activitiesList.appendChild(activityCard);
-        
-                // Add to dropdown
-                const option = document.createElement("option");
-                option.value = name;
-                option.textContent = name;
-                activitySelect.appendChild(option);
-              }
-            } catch (error) {
-              activitiesList.innerHTML = "<p>Failed to load activities. Please try again later.</p>";
-              console.error("Error loading activities:", error);
-            }
-          });
-        </script>
       </section>
 
       <section id="signup-container">
@@ -68,13 +25,12 @@
         <form id="signup-form">
           <div class="form-group">
             <label for="email">Student Email:</label>
-            <input type="email" id="email" required placeholder="your-email@mergington.edu" />
+            <input type="email" id="email" required />
           </div>
           <div class="form-group">
             <label for="activity">Select Activity:</label>
             <select id="activity" required>
               <option value="">-- Select an activity --</option>
-              <!-- Activity options will be loaded here -->
             </select>
           </div>
           <button type="submit">Sign Up</button>
@@ -86,7 +42,5 @@
     <footer>
       <p>&copy; 2023 Mergington High School</p>
     </footer>
-
-    <script src="app.js"></script>
   </body>
 </html>
